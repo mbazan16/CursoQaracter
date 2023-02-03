@@ -61,5 +61,7 @@ public class Test {
 		casas.stream().filter(c->c.getNumHabitaciones() > 1).forEach(System.out::println);
 		
 	}
+	//Agregado este comentario para provocar un conflicto 
+	// 78 86 22
 
 }

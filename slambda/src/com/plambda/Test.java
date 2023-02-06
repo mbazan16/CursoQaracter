@@ -43,8 +43,14 @@ public class Test {
 		// Paso5 Conseguir los m2 de todos los salones de las casas
 
 		// Suma de m2:
-		int m2Salones = casas.stream().mapToInt(a -> a.getSalon().getM2()).sum();
-		System.out.println("M2 totales de los salones:" + m2Salones);
+		//int m2Salones = casas.stream().mapToInt(a -> a.getSalon().getM2()).sum();
+		int m2Salones = casas.stream()
+						.filter(a -> a.getNumHabitaciones() > 1)
+				        .map(Casa::getSalon)
+				        .peek(System.out::println)
+						.mapToInt(Salon::getM2)
+						.sum();
+		System.out.println("M2 totales de los salonessdsds:" + m2Salones);
 
 		// long m2Salones = casas.stream()
 		// .map(a -> a.getSalon().getM2())

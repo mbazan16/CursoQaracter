@@ -12,8 +12,17 @@ public class Test {
 
 	// Todo el código excepto las declaraciones debe estar en un bloque try-catch
 	public static void main(String[] args)  {
-		// Declarar las variables necesarias		
-		
+		// Declarar las variables necesarias
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Por favor, introduzca una palabra.");
+		String cadena = sc.next();
+
+		ValidationString val = new ValidationString();
+		try {
+			val.validLenght(cadena);
+		} catch (StringNotValidException e) {
+			System.out.println(e);
+		}
 			
 			// Paso 1. Realizar un bucle infinito, que únicamente se pare
 			// cuando el código lance una excepcion de cadena nula o vacía o 

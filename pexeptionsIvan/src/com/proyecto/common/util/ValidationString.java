@@ -28,20 +28,7 @@ public class ValidationString {
 	
 	public static void validLenght(String x) throws StringNotValidException
 	{
-		if(x == null || x.length() == 0) 
-			throw new StringNotValidException(CodeErrors.NO_STRING, "Cadena invalida");
-		if(x.length() < Constantes.TAMANIO_MIN) 
-			throw new StringTooShortException(x.length(),
-					CodeErrors.STRING_TOO_SHORT, 
-					"Cadena muy corta");
-		if(x.length() > Constantes.TAMANIO_MAX) 
-			throw new StringTooLongException(x.length(), 
-					CodeErrors.STRING_TOO_LONG
-					, "Cadena muy larga");
-		String checkNotAllowedWord = checkNotAllowedWords(x);
-		if(checkNotAllowedWord != null) 
-				throw new NotAllowedWordsException(NotAllowedWord.valueOf(checkNotAllowedWord), 
-						CodeErrors.WORD_NOT_ALLOWED_FOUND , "Palabra invalida");
+		validString(x,Constantes.TAMANIO_MAX,Constantes.TAMANIO_MIN);
 	}
 
 	// Paso 2: Sobrecargar el método anterior para que realize las
@@ -54,21 +41,7 @@ public class ValidationString {
 		
 	public static void validLenght(String x,int max,int min) throws StringNotValidException
 	{
-		
-		if(x == null || x.length() == 0) 
-			throw new StringNotValidException(CodeErrors.NO_STRING, "Cadena invalida");
-		if(x.length() < 1) 
-			throw new StringTooShortException(x.length(),
-					CodeErrors.STRING_TOO_SHORT, 
-					"Cadena muy corta");
-		if(x.length() > 25) 
-			throw new StringTooLongException(x.length(), 
-					CodeErrors.STRING_TOO_LONG
-					, "Cadena muy larga");
-		String checkNotAllowedWord = checkNotAllowedWords(x);
-		if(checkNotAllowedWord != null) 
-				throw new NotAllowedWordsException(NotAllowedWord.valueOf(checkNotAllowedWord), 
-						CodeErrors.WORD_NOT_ALLOWED_FOUND , "Palabra invalida");
+		validString(x,max,min);
 	}
 
 	// Paso 3. Si alguna funcionalidad se repitiese extraerla en un método privado
@@ -85,6 +58,24 @@ public class ValidationString {
 		}
 		
 		return null;
+	}
+	
+	private static void validString(String x, int max,int min) throws StringNotValidException
+	{
+		if(x == null || x.length() == 0) 
+			throw new StringNotValidException(CodeErrors.NO_STRING, "Cadena invalida");
+		if(x.length() < min) 
+			throw new StringTooShortException(x.length(),
+					CodeErrors.STRING_TOO_SHORT, 
+					"Cadena muy corta");
+		if(x.length() > max) 
+			throw new StringTooLongException(x.length(), 
+					CodeErrors.STRING_TOO_LONG
+					, "Cadena muy larga");
+		String checkNotAllowedWord = checkNotAllowedWords(x);
+		if(checkNotAllowedWord != null) 
+				throw new NotAllowedWordsException(NotAllowedWord.valueOf(checkNotAllowedWord), 
+						CodeErrors.WORD_NOT_ALLOWED_FOUND , "Palabra invalida");
 	}
 	
 

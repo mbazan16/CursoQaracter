@@ -15,7 +15,6 @@ public class Test {
 		// Declarar las variables necesarias		
 		Scanner scanner;
 		String cadenaIngresada;
-			System.out.println("AAA");
 			// Paso 1. Realizar un bucle infinito, que únicamente se pare
 			// cuando el código lance una excepcion de cadena nula o vacía o 
 			// de palabra no permitida introducida

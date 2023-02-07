@@ -35,7 +35,7 @@ public class ValidationString {
 
 		if (validateNotAllowedWord(word)) {
 			throw new NotAllowedWordsException("Not allowed word", CodeErrors.WORD_NOT_ALLOWED_FOUND,
-					NotAllowedWord.valueOf(word));
+					NotAllowedWord.valueOf(word.toUpperCase()));
 		}
 	}
 
@@ -62,7 +62,7 @@ public class ValidationString {
 
 		if (validateNotAllowedWord(word)) {
 			throw new NotAllowedWordsException("Not allowed word", CodeErrors.WORD_NOT_ALLOWED_FOUND,
-					NotAllowedWord.valueOf(word));
+					NotAllowedWord.valueOf(word.toUpperCase()));
 		}
 	}
 
@@ -95,7 +95,7 @@ public class ValidationString {
 	private static boolean validateNotAllowedWord(String value) {
 		NotAllowedWord[] notAllowedWords = NotAllowedWord.values();
 		for (NotAllowedWord word : notAllowedWords) {
-			if (word.name().equals(value)) {
+			if (word.name().equalsIgnoreCase(value)) {
 				return true;
 			}
 		}

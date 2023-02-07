@@ -13,17 +13,17 @@ public class Test {
 	// Todo el código excepto las declaraciones debe estar en un bloque try-catch
 	public static void main(String[] args)  {
 		// Declarar las variables necesarias		
-		Scanner scanner;
 		String cadenaIngresada;
 			// Paso 1. Realizar un bucle infinito, que únicamente se pare
 			// cuando el código lance una excepcion de cadena nula o vacía o 
 			// de palabra no permitida introducida
-			try 
+			try(Scanner scanner = new Scanner(System.in))
 			{
 				while(true)
 				{
 					// Paso 2. Pedir una cadena por consola al usuario
-					scanner = new Scanner(System.in);
+					System.out.println("Ingrese una palabra");
+					
 					cadenaIngresada = scanner.nextLine();
 					try 
 					{

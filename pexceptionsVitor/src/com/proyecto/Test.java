@@ -13,12 +13,10 @@ public class Test {
 	// Todo el c�digo excepto las declaraciones debe estar en un bloque try-catch
 	public static void main(String[] args) {
 		// Declarar las variables necesarias
-		Scanner sc = null;
 		String word;
-		try {
+		try(Scanner sc = new Scanner(System.in)) {
 			while (true) {
 				System.out.println("Type a word: ");
-				sc = new Scanner(System.in);
 				word = sc.nextLine();
 				System.out.println(word);
 				try {
@@ -37,8 +35,6 @@ public class Test {
 			System.out.println("String not valid: " + e.getMessage());
 		} catch (Exception e) {
 			System.out.println("Generic Exception: " + e.getMessage());
-		} finally {
-			sc.close();
 		}
 
 		// Paso 1. Realizar un bucle infinito, que �nicamente se pare

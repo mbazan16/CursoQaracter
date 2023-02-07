@@ -44,12 +44,12 @@ public class ValidationString {
 
 	// Paso 3. Si alguna funcionalidad se repitiese extraerla en un método privado
 	private static void validador(String cadena, int max, int min) throws StringNotValidException {
-		if (cadena.isEmpty() || cadena == null) throw new StringNotValidException("NO_STRING", "Cadena vacía o nula.");
-		if(cadena.length() > max) throw new StringTooLongException("STRING_TOO_LONG", "Cadena demasiado larga", cadena.length());
-		if(cadena.length() < min) throw new StringTooShortException("STRING_TOO_SHORT", "Cadena demasiado corta", cadena.length());
+		if (cadena.isEmpty() || cadena == null) throw new StringNotValidException(CodeErrors.NO_STRING, "Cadena vacía o nula.");
+		if(cadena.length() > max) throw new StringTooLongException(CodeErrors.STRING_TOO_LONG, "Cadena demasiado larga", cadena.length());
+		if(cadena.length() < min) throw new StringTooShortException(CodeErrors.STRING_TOO_SHORT, "Cadena demasiado corta", cadena.length());
 		
 		for(NotAllowedWord word: NotAllowedWord.values()){
-			if(cadena.toUpperCase().contains(word.name())) throw new NotAllowedWordsException("WORD_NOT_ALLOWED_FOUND", "Palabra prohibida usada", word);
+			if(cadena.toUpperCase().contains(word.name())) throw new NotAllowedWordsException(CodeErrors.WORD_NOT_ALLOWED_FOUND, "Palabra prohibida usada", word);
 			
 		}
 	}

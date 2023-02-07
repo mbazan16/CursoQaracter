@@ -13,7 +13,7 @@ public class Test {
 	// Todo el c�digo excepto las declaraciones debe estar en un bloque try-catch
 	public static void main(String[] args) {
 		// Declarar las variables necesarias
-		Scanner sc;
+		Scanner sc = null;
 		String word;
 		try {
 			while (true) {
@@ -25,9 +25,9 @@ public class Test {
 					ValidationString.validLength(word);
 					System.out.println("Valid String: " + word);
 				} catch (StringTooLongException e) {
-					System.out.println("String too long: " + e.getTamanyo());
+					System.out.println("String too long max size allowed: " + e.getTamanyo());
 				} catch (StringTooShortException e) {
-					System.out.println("String too short: " + e.getTamanyo());
+					System.out.println("String too short min size allowed: " + e.getTamanyo());
 				}
 
 			}
@@ -37,6 +37,8 @@ public class Test {
 			System.out.println("String not valid: " + e.getMessage());
 		} catch (Exception e) {
 			System.out.println("Generic Exception: " + e.getMessage());
+		} finally {
+			sc.close();
 		}
 
 		// Paso 1. Realizar un bucle infinito, que �nicamente se pare

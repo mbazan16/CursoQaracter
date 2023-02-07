@@ -12,29 +12,30 @@ public class Test {
 
 	// Todo el código excepto las declaraciones debe estar en un bloque try-catch
 	@SuppressWarnings({ "static-access"})
-	public static void main(String[] args) throws StringNotValidException{
+	public static void main(String[] args){
 		// Declarar las variables necesarias
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Por favor, introduzca una palabra.");
-		String cadena = sc.next();
-
-		while (true) {
-			try {
+		String cadena;
+		
+		try (Scanner sc = new Scanner(System.in)) {
+			while (true) {
 				try {
+					System.out.println("Por favor, introduzca una palabra.");
+					cadena = sc.nextLine();
+
 					ValidationString.validLenght(cadena);
+					
 					System.out.println("Cadena introducida correcta.");
+					
 				} catch (StringTooShortException e) {
 					System.out.println("Cadena demasiado corta. Tiene " + e.getTamanyo() + " caracteres.");
 				} catch (StringTooLongException e1) {
 					System.out.println("Cadena demasiado larga. Tiene " + e1.getTamanyo() + " caracteres.");
 				}
-			} catch (NotAllowedWordsException e2) {
-				System.out.println("Cadena con palabras prohibidas. Usa " + e2.getWord());
-				throw e2;
-			} catch (StringNotValidException e3) {
-				System.out.println("Cadena nula o vacia");
-				throw e3;
 			}
+		} catch (NotAllowedWordsException e2) {
+			System.out.println("Cadena con palabras prohibidas. Usa " + e2.getWord());
+		} catch (StringNotValidException e3) {
+			System.out.println("Cadena nula o vacia");
 		}
 
 		// Paso 1. Realizar un bucle infinito, que únicamente se pare

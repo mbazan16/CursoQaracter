@@ -25,8 +25,13 @@ public class ValidationString {
 		
 		// Paso 1.4 Validar si no contiene palabras no permitidas;
 
+	
+	/**
+	 * @param cadena
+	 * @throws StringNotValidException
+	 */
 	public static void validLenght(String cadena) throws StringNotValidException  {
-		validador(cadena, new Constantes().TAMANIO_MAX, new Constantes().TAMANIO_MIN);
+		validador(cadena, Constantes.TAMANIO_MAX, Constantes.TAMANIO_MIN);
 	}
 	
 
@@ -37,12 +42,26 @@ public class ValidationString {
 		// Paso 1.2 Validar si es mayor que el tamaño maximo (Constantes)
 		// Paso 1.3 Validar si es menor que el tamaño minimo (Constantes)
 		// Paso 1.4 Validar si no contiene palabras no permitidas;		
-		
+	
+	
+	/**
+	 * @param cadena
+	 * @param max
+	 * @param min
+	 * @throws StringNotValidException
+	 */
 	public static void validLenght(String cadena, int max, int min) throws StringNotValidException {
 		validador(cadena, max, min);
 	}
 
 	// Paso 3. Si alguna funcionalidad se repitiese extraerla en un método privado
+	
+	/**
+	 * @param cadena
+	 * @param max
+	 * @param min
+	 * @throws StringNotValidException
+	 */
 	private static void validador(String cadena, int max, int min) throws StringNotValidException {
 		if (cadena.isEmpty() || cadena == null) throw new StringNotValidException(CodeErrors.NO_STRING, "Cadena vacía o nula.");
 		if(cadena.length() > max) throw new StringTooLongException(CodeErrors.STRING_TOO_LONG, "Cadena demasiado larga", cadena.length());

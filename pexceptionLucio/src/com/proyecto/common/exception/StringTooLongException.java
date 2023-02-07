@@ -8,8 +8,8 @@ public class StringTooLongException extends StringNotValidException {
 
 	//Paso 3. Implementar el constructor adecuado para asignar valor a todos
 	// los atributos de esta clase incluidos los heredados
-	public StringTooLongException(String code, int tamanyo) {
-		super(code);
+	public StringTooLongException(String code, String str,int tamanyo) {
+		super(code, str);
 		this.tamanyo = tamanyo;
 	}
 	

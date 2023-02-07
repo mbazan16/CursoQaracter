@@ -10,8 +10,8 @@ public class NotAllowedWordsException extends StringNotValidException {
 
 	//Paso 3. Implementar un constructor que tenga los parametros  necesarios 
 	// para invocar al constructor padre y asignar/establecer el valor de word.
-	public NotAllowedWordsException(String code, NotAllowedWord word) {
-		super(code);
+	public NotAllowedWordsException(String code, String str,NotAllowedWord word) {
+		super(code, str);
 		this.word = word;
 	}
 

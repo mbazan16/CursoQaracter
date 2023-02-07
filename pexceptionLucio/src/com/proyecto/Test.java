@@ -37,14 +37,16 @@ public class Test {
 					ValidationString.validLenght(str); 
 					System.out.println("Palabra valida.");
 				} catch (StringTooLongException e) {
-					System.out.println("El tamanio del String es muy largo.");
+					System.out.println(e.getMessage());
 				} catch (StringTooShortException e) {
-					System.out.println("El tamanio del String es muy corto.");
+					System.out.println(e.getMessage());
 				}
 			}
 			
 		} catch (StringNotValidException e) {
-			System.out.println("El String pasado es nulo o esta vacio.");
+			System.out.println(e.getMessage());
+		} finally{
+			scr.close();
 		}
 		
 											

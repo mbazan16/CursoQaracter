@@ -10,7 +10,7 @@ public class StringTooLongException extends StringNotValidException {
 	// los atributos de esta clase incluidos los heredados
 
 	public StringTooLongException(String code, String mensaje, int tamanyo) {
-		super(code, mensaje);
+		super(code, mensaje + tamanyo);
 		this.tamanyo = tamanyo;
 	}
 

@@ -10,7 +10,7 @@ public class StringNotValidException extends Exception {
 	// y un mensaje para el constructor del padre
 
 	public StringNotValidException(String code, String mensaje) {
-		super(mensaje);
+		super(code + mensaje);
 		this.code = code;
 	}
 

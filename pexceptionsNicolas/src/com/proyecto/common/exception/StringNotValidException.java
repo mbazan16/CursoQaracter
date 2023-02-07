@@ -1,5 +1,6 @@
 package com.proyecto.common.exception;
 
+@SuppressWarnings("serial")
 public class StringNotValidException extends Exception {
 
 	// Paso 1.Indicar atributo protegido de tipo String llamado "code"

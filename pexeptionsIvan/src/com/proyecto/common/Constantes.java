@@ -7,6 +7,6 @@ public class Constantes {
 	
 	//Paso 2. Constante de cadena int "TAMANIO_MIN" con valor 2
 	
-	public final static int TAMANIO_MIN = 25;
+	public final static int TAMANIO_MIN = 2;
  
 }

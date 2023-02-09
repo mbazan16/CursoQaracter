@@ -47,7 +47,7 @@ public class DepartamentosController extends HttpServlet {
 			gestionExcepcion(e,request);
 		}
 		
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/departamentoes.jsp");
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/departamentos.jsp");
 		dispatcher.forward(request,response);
 	}
 	

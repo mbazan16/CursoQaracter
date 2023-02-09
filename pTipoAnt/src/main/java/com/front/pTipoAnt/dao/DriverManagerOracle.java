@@ -14,10 +14,10 @@ public class DriverManagerOracle {
 	}
 	
 	public Connection getConexion() {		
-		String connectionString="jdbc:oracle:thin:@localhost:1521:xe";
+		String connectionString="jdbc:mysql://localhost:3306/HR";
 		Connection con=null;
 		try {
-		        Class.forName("oracle.jdbc.OracleDriver");
+		        Class.forName("com.mysql.cj.jdbc.Driver");
 		    } catch (ClassNotFoundException e) {
 		        // TODO Auto-generated catch block
 		        e.printStackTrace();

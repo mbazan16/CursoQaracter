@@ -13,30 +13,29 @@ import org.apache.log4j.Logger;
 import com.front.pTipoAnt.common.exceptions.DAOException;
 import com.front.pTipoAnt.common.exceptions.TipoException;
 import com.front.pTipoAnt.dao.interfaces.IDAO;
-import com.front.pTipoAnt.data.Departamento;
+import com.front.pTipoAnt.data.Direccion;
 
-public class DepartamentoDAO implements IDAO<Long, Departamento> {
+public class DireccionDAO implements IDAO<Long, Direccion> {
 
 	DriverManagerOracle driverManager;
 
-	private static final Logger log = Logger.getLogger(DepartamentoDAO.class);
+	private static final Logger log = Logger.getLogger(DireccionDAO.class);
 
-	public DepartamentoDAO() {
-
+	public DireccionDAO() {
 		this.driverManager = DriverManagerOracle.getInstancia();
 	}
 
 	@Override
-	public List<Departamento> findAll() throws DAOException {
+	public List<Direccion> findAll() throws DAOException {
 		log.debug("findAll");
 
 		Connection con;
 		Statement stm;
 		ResultSet rs;
 
-		List<Departamento> departamentos = new ArrayList<Departamento>();
+		List<Direccion> direcciones = new ArrayList<>();
 
-		String sql = "SELECT DEPARTMENT_ID,DEPARTMENT_NAME,LOCATION_ID,MANAGER_ID FROM DEPARTMENTS ORDER BY DEPARTMENT_ID";
+		String sql = "SELECT LOCATION_ID,STREET_ADDRESS,POSTAL_CODE,CITY,STATE_PROVINCE,COUNTRY_ID FROM LOCATIONS ORDER BY LOCATION_ID";
 
 		try {
 			con = driverManager.getConexion();
@@ -44,15 +43,21 @@ public class DepartamentoDAO implements IDAO<Long, Departamento> {
 			rs = stm.executeQuery(sql);
 
 			while (rs.next()) {
-				Departamento departamento = new Departamento();
-				departamento.setId(rs.getLong("DEPARTMENT_ID"));
-				departamento.setNombre(rs.getString("DEPARTMENT_NAME"));
-				departamento.getDireccion().setId(rs.getLong("LOCATION_ID"));
-				departamento.setIdManager(rs.getLong("MANAGER_ID"));
-				departamentos.add(departamento);
+				Direccion direccion = new Direccion();
+				direccion.setId(rs.getLong("LOCATION_ID"));
+				direccion.setCalle(rs.getString("STREET_ADDRESS"));
+				direccion.setCodigoPostal(rs.getString("POSTAL_CODE"));
+				direccion.setCiudad(rs.getString("CITY"));
+				direccion.setEstado(rs.getString("STATE_PROVINCE"));
+				direccion.setIdPais(rs.getString("COUNTRY_ID"));
+
+				direcciones.add(direccion);
 			}
 
-			return departamentos;
+			rs.close();
+			stm.close();
+			con.close();
+			return direcciones;
 
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage(), sqle);
@@ -66,7 +71,7 @@ public class DepartamentoDAO implements IDAO<Long, Departamento> {
 	}
 
 	@Override
-	public Departamento findOne(Long id) throws DAOException {
+	public Direccion findOne(Long id) throws DAOException {
 		log.debug("findOne");
 		log.info("id:" + id);
 
@@ -74,9 +79,9 @@ public class DepartamentoDAO implements IDAO<Long, Departamento> {
 		PreparedStatement pstm;
 		ResultSet rs;
 
-		Departamento departamento = null;
+		Direccion direccion = null;
 
-		String sql = "SELECT DEPARTMENT_ID,DEPARTMENT_NAME,LOCATION_ID,MANAGER_ID FROM DEPARTMENTS WHERE DEPARTMENT_ID=?";
+		String sql = "SELECT LOCATION_ID,STREET_ADDRESS,POSTAL_CODE,CITY,STATE_PROVINCE,COUNTRY_ID FROM LOCATIONS WHERE LOCATION_ID=?";
 
 		try {
 			con = driverManager.getConexion();
@@ -85,11 +90,13 @@ public class DepartamentoDAO implements IDAO<Long, Departamento> {
 			rs = pstm.executeQuery();
 
 			if (rs.next()) {
-				departamento = new Departamento();
-				departamento.setId(rs.getLong("DEPARTMENT_ID"));
-				departamento.setNombre(rs.getString("DEPARTMENT_NAME"));
-				departamento.getDireccion().setId(rs.getLong("LOCATION_ID"));
-				departamento.setIdManager(rs.getLong("MANAGER_ID"));
+				direccion = new Direccion();
+				direccion.setId(rs.getLong("LOCATION_ID"));
+				direccion.setCalle(rs.getString("STREET_ADDRESS"));
+				direccion.setCodigoPostal(rs.getString("POSTAL_CODE"));
+				direccion.setCiudad(rs.getString("CITY"));
+				direccion.setEstado(rs.getString("STATE_PROVINCE"));
+				direccion.setIdPais(rs.getString("COUNTRY_ID"));
 			} else {
 				log.error(TipoException.ELEMENTO_NO_ENCONTRADO.getMensaje());
 				throw new DAOException(TipoException.ELEMENTO_NO_ENCONTRADO);
@@ -102,7 +109,7 @@ public class DepartamentoDAO implements IDAO<Long, Departamento> {
 			pstm.close();
 			con.close();
 
-			return departamento;
+			return direccion;
 
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage(), sqle);
@@ -118,27 +125,32 @@ public class DepartamentoDAO implements IDAO<Long, Departamento> {
 	}
 
 	@Override
-	public void create(Departamento item) throws DAOException {
+	public void create(Direccion item) throws DAOException {
 		// TODO Auto-generated method stub
 		log.debug("Create");
 
 		Connection con;
 		PreparedStatement pstm;
 
-		String sql = "INSERT INTO DEPARTMENTS (DEPARTMENT_ID,DEPARTMENT_NAME,LOCATION_ID,MANAGER_ID) VALUES(?,?,?,?)";
+		String sql = "INSERT INTO LOCATIONS (LOCATION_ID,STREET_ADDRESS,POSTAL_CODE,CITY,STATE_PROVINCE,COUNTRY_ID) VALUES(?,?,?,?,?,?)";
 
 		try {
 			con = driverManager.getConexion();
 			pstm = con.prepareStatement(sql);
 			pstm.setLong(1, item.getId());
-			pstm.setString(2, item.getNombre());
-			pstm.setLong(3, item.getDireccion().getId());
-			pstm.setLong(4, item.getIdManager());
+			pstm.setString(2, item.getCalle());
+			pstm.setString(3, item.getCodigoPostal());
+			pstm.setString(4, item.getCiudad());
+			pstm.setString(5, item.getEstado());
+			pstm.setString(6, item.getIdPais());
 
 			int i = pstm.executeUpdate();
 
 			if (i == 1) {
 				log.info("Elemento creado:");
+			} else if (i > 1) {
+				log.error(TipoException.ELEMENTO_DUPLICADO.getMensaje());
+				throw new DAOException(TipoException.ELEMENTO_DUPLICADO);
 			} else {
 				log.error(TipoException.ELEMENTO_NO_CREADO.getMensaje());
 				throw new DAOException(TipoException.ELEMENTO_NO_CREADO);
@@ -162,21 +174,23 @@ public class DepartamentoDAO implements IDAO<Long, Departamento> {
 	}
 
 	@Override
-	public void update(Departamento item) throws DAOException {
+	public void update(Direccion item) throws DAOException {
 		log.debug("update");
 
 		Connection con;
 		PreparedStatement pstm;
 
-		String sql = "UPDATE DEPARTMENTS SET DEPARTMENT_NAME=?, LOCATION_ID=?, MANAGER_ID=? WHERE DEPARTMENT_ID=?";
+		String sql = "UPDATE LOCATIONS SET STREET_ADDRESS=?, POSTAL_CODE=?, CITY=?, STATE_PROVINCE=?, COUNTRY_ID=? WHERE LOCATION_ID=?";
 
 		try {
 			con = driverManager.getConexion();
 			pstm = con.prepareStatement(sql);
-			pstm.setString(1, item.getNombre());
-			pstm.setLong(2, item.getDireccion().getId());
-			pstm.setLong(3, item.getIdManager());
-			pstm.setLong(4, item.getId());
+			pstm.setString(1, item.getCalle());
+			pstm.setString(2, item.getCodigoPostal());
+			pstm.setString(3, item.getCiudad());
+			pstm.setString(4, item.getEstado());
+			pstm.setString(5, item.getIdPais());
+			pstm.setLong(6, item.getId());
 
 			int i = pstm.executeUpdate();
 
@@ -212,7 +226,7 @@ public class DepartamentoDAO implements IDAO<Long, Departamento> {
 		Connection con;
 		PreparedStatement pstm;
 
-		String sql = "DELETE FROM DEPARTMENTS WHERE DEPARTMENT_ID=?";
+		String sql = "DELETE FROM LOCATIONS WHERE LOCATION_ID=?";
 
 		con = driverManager.getConexion();
 
@@ -243,7 +257,5 @@ public class DepartamentoDAO implements IDAO<Long, Departamento> {
 			log.error(e.getMessage(), e);
 			throw new DAOException(TipoException.EXCEPCION_GENERAL);
 		}
-
 	}
-
 }

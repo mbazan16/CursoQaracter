@@ -2,6 +2,7 @@ package com.front.pTipoAnt.data;
 
 /**
  * Bean Departamento
+ * 
  * @author MARIA
  *
  */
@@ -9,18 +10,18 @@ public class Departamento {
 	private Long id;
 	private String nombre;
 	private Long idManager;
-	private Long idDireccion;
-	
+	private Direccion direccion;
+
 	public Departamento() {
 		super();
 	}
 
-	public Departamento(Long id, String nombre, Long idManager, Long idLocalizacion) {
+	public Departamento(Long id, String nombre, Long idManager, Direccion idLocalizacion) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.idManager = idManager;
-		this.idDireccion = idLocalizacion;
+		this.direccion = idLocalizacion;
 	}
 
 	public Long getId() {
@@ -47,21 +48,21 @@ public class Departamento {
 		this.idManager = idManager;
 	}
 
-	public Long getIdDireccion() {
-		return idDireccion;
+	public Direccion getDireccion() {
+		if (this.direccion == null)
+			this.direccion = new Direccion();
+		return direccion;
 	}
 
-	public void setIdDireccion(Long idDireccion) {
-		this.idDireccion = idDireccion;
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
 
 	@Override
 	public String toString() {
 		return "Departamento [id=" + id + ", nombre=" + nombre + ", idManager=" + idManager + ", idLocalizacion="
-				+ idDireccion + "]";
+				+ direccion + "]";
 	}
-
-	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -77,10 +78,10 @@ public class Departamento {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (idDireccion == null) {
-			if (other.idDireccion != null)
+		if (direccion == null) {
+			if (other.direccion != null)
 				return false;
-		} else if (!idDireccion.equals(other.idDireccion))
+		} else if (!direccion.equals(other.direccion))
 			return false;
 		if (idManager == null) {
 			if (other.idManager != null)
@@ -94,5 +95,5 @@ public class Departamento {
 			return false;
 		return true;
 	}
-	
+
 }

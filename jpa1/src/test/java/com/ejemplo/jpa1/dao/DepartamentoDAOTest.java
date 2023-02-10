@@ -11,13 +11,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ejemplo.jpa1.dao.exceptions.DAOException;
 import com.ejemplo.jpa1.entities.Departamento;
+import com.mysql.cj.log.Log;
 
 class DepartamentoDAOTest {
 
 	DepartamentoDAO depDAO;
+	private static final Logger log = LoggerFactory.getLogger(DepartamentoDAOTest.class);
 	
 	@BeforeEach
 	public void configurarDepDAO() 
@@ -37,8 +41,11 @@ class DepartamentoDAOTest {
 	@DisplayName("Encontrar el departamento 80")
 	void testFindOne() throws DAOException 
 	{
+		log.info("testFindOne --------------------AAAA");
 		assertEquals(80, depDAO.findOne(80).getId());
+		//assertEquals("Oxford", depDAO.findOne(80).getDireccion().getCiudad());
 	}
+	
 	
 	@Test
 	@DisplayName("Crear un departamento")

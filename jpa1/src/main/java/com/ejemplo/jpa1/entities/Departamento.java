@@ -1,7 +1,15 @@
 package com.ejemplo.jpa1.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -21,22 +29,33 @@ public class Departamento implements Serializable {
 	@Column(name="department_name")
 	private String nombre;
 
-	@Column(name="location_id")
-	private int locationId;
-
+	@ManyToOne
+	@JoinColumn(name = "location_id")
+	private Direccion direccion;
+	
 	@Column(name="manager_id")
 	private int managerId;
 
 	public Departamento() {
 	}
 
-	public Departamento(int id, String nombre, int locationId, int managerId) {
+	public Departamento(int id, String nombre, Direccion direccion, int managerId) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
-		this.locationId = locationId;
+		this.direccion = direccion;
 		this.managerId = managerId;
 	}
+	
+	public Departamento(int id, String nombre, int idDireccion, int managerId) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.direccion = new Direccion();
+		this.direccion.setId(idDireccion);
+		this.managerId = managerId;
+	}
+	
 
 	public int getId() {
 		return this.id;
@@ -54,12 +73,12 @@ public class Departamento implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public int getLocationId() {
-		return this.locationId;
+	public Direccion getDireccion() {
+		return direccion;
 	}
 
-	public void setLocationId(int locationId) {
-		this.locationId = locationId;
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
 
 	public int getManagerId() {

@@ -36,7 +36,7 @@ Departamentoes
 </div>
 <ul>
 <c:forEach items="${listado}" var="elemento">
-<li>${elemento.nombre} 
+<li>${elemento.nombre} - ${elemento.direction.town} 
 <img src="./img/lupa.png" width=25 height=25 onClick="javascript:verElemento(${elemento.id})">
 </li>
 </c:forEach>

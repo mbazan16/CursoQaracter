@@ -1,5 +1,7 @@
 package com.front.pTipoAnt.data;
 
+import java.util.Objects;
+
 /**
  * Bean Departamento
  * @author MARIA
@@ -9,18 +11,18 @@ public class Departamento {
 	private Long id;
 	private String nombre;
 	private Long idManager;
-	private Long idDireccion;
+	private Direction direction;
 	
 	public Departamento() {
 		super();
 	}
 
-	public Departamento(Long id, String nombre, Long idManager, Long idLocalizacion) {
+	public Departamento(Long id, String nombre, Long idManager, Direction direction) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.idManager = idManager;
-		this.idDireccion = idLocalizacion;
+		this.direction = direction;
 	}
 
 	public Long getId() {
@@ -47,21 +49,27 @@ public class Departamento {
 		this.idManager = idManager;
 	}
 
-	public Long getIdDireccion() {
-		return idDireccion;
+	
+
+	public Direction getDirection() {
+		if(this.direction == null) this.direction = new Direction();
+		return direction;
 	}
 
-	public void setIdDireccion(Long idDireccion) {
-		this.idDireccion = idDireccion;
+	public void setDirection(Direction direction) {
+		this.direction = direction;
 	}
 
 	@Override
 	public String toString() {
-		return "Departamento [id=" + id + ", nombre=" + nombre + ", idManager=" + idManager + ", idLocalizacion="
-				+ idDireccion + "]";
+		return "Departamento [id=" + id + ", nombre=" + nombre + ", idManager=" + idManager + ", direction=" + direction
+				+ "]";
 	}
 
-	
+	@Override
+	public int hashCode() {
+		return Objects.hash(direction, id, idManager, nombre);
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -72,27 +80,10 @@ public class Departamento {
 		if (getClass() != obj.getClass())
 			return false;
 		Departamento other = (Departamento) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (idDireccion == null) {
-			if (other.idDireccion != null)
-				return false;
-		} else if (!idDireccion.equals(other.idDireccion))
-			return false;
-		if (idManager == null) {
-			if (other.idManager != null)
-				return false;
-		} else if (!idManager.equals(other.idManager))
-			return false;
-		if (nombre == null) {
-			if (other.nombre != null)
-				return false;
-		} else if (!nombre.equals(other.nombre))
-			return false;
-		return true;
+		return Objects.equals(direction, other.direction) && Objects.equals(id, other.id)
+				&& Objects.equals(idManager, other.idManager) && Objects.equals(nombre, other.nombre);
 	}
+
+	
 	
 }

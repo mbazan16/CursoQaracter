@@ -1,5 +1,6 @@
 package com.front.pTipoAnt.bussines;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -9,8 +10,10 @@ import com.front.pTipoAnt.common.exceptions.DAOException;
 import com.front.pTipoAnt.common.exceptions.ServicioException;
 import com.front.pTipoAnt.common.exceptions.TipoException;
 import com.front.pTipoAnt.dao.DepartamentoDAO;
+import com.front.pTipoAnt.dao.DirectionDAO;
 import com.front.pTipoAnt.dao.interfaces.IDAO;
 import com.front.pTipoAnt.data.Departamento;
+import com.front.pTipoAnt.data.Direction;
 
 public class ServDepartamento implements IServicio<Long,Departamento>{
 
@@ -18,9 +21,13 @@ public class ServDepartamento implements IServicio<Long,Departamento>{
 
 	IDAO<Long,Departamento> iDao ;
 
+	IDAO<Long,Direction> iDaoDir ;
+	
+	
 	public ServDepartamento() {
 		super();
 		this.iDao = new DepartamentoDAO();
+		this.iDaoDir = new DirectionDAO();
 	}
 	
 	@Override
@@ -28,7 +35,15 @@ public class ServDepartamento implements IServicio<Long,Departamento>{
 		log.debug("findAll");
 
 		try {
-			return this.iDao.findAll();
+			List<Departamento> deptos = new ArrayList<Departamento>();
+			deptos = this.iDao.findAll();
+			for(Departamento depto : deptos) 
+			{
+				Direction dir = this.iDaoDir.findOne(depto.getDirection().getId());
+				depto.setDirection(dir);
+			}
+			
+			return deptos;
 		} catch (DAOException daoe) {
 			throw new ServicioException(daoe);
 		}catch (Exception e) {
@@ -41,7 +56,10 @@ public class ServDepartamento implements IServicio<Long,Departamento>{
 		log.debug("findOne");
 
 		try {
-			return this.iDao.findOne(key);
+			Departamento depto = this.iDao.findOne(key);
+			Direction dir = this.iDaoDir.findOne(depto.getDirection().getId());
+			depto.setDirection(dir);
+			return depto;
 		} catch (DAOException daoe) {
 			throw new ServicioException(daoe);
 		}catch (Exception e) {

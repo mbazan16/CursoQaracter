@@ -48,7 +48,7 @@ public class DepartamentoDAO implements IDAO<Long, Departamento> {
 				Departamento departamento = new Departamento();
 				departamento.setId(rs.getLong("DEPARTMENT_ID"));
 				departamento.setNombre(rs.getString("DEPARTMENT_NAME"));
-				departamento.setIdDireccion(rs.getLong("LOCATION_ID"));
+				departamento.getDirection().setId(rs.getLong("LOCATION_ID"));
 				departamento.setIdManager(rs.getLong("MANAGER_ID"));
 				departamentos.add(departamento);
 			}
@@ -80,7 +80,7 @@ public class DepartamentoDAO implements IDAO<Long, Departamento> {
 		Departamento departamento=null;
 
 
-		String sql ="SELECT DEPARTMENT_ID,DEPARTMENT_NAME,LOCATION_ID,MANAGER_ID FROM DEPARTMENTS WHERE ID=DEPARTMENT_ID";
+		String sql ="SELECT DEPARTMENT_ID,DEPARTMENT_NAME,LOCATION_ID,MANAGER_ID FROM DEPARTMENTS WHERE DEPARTMENT_ID = ?";
 
 		try {
 			con = driverManager.getConexion();
@@ -92,7 +92,7 @@ public class DepartamentoDAO implements IDAO<Long, Departamento> {
 				departamento = new Departamento();
 				departamento.setId(rs.getLong("DEPARTMENT_ID"));
 				departamento.setNombre(rs.getString("DEPARTMENT_NAME"));
-				departamento.setIdDireccion(rs.getLong("LOCATION_ID"));
+				departamento.getDirection().setId(rs.getLong("LOCATION_ID"));
 				departamento.setIdManager(rs.getLong("MANAGER_ID"));
 			}else {
 				log.error(TipoException.ELEMENTO_NO_ENCONTRADO.getMensaje());
@@ -136,7 +136,7 @@ public class DepartamentoDAO implements IDAO<Long, Departamento> {
 			pstm = con.prepareStatement(sql);
 			pstm.setLong(1, item.getId());
 			pstm.setString(2, item.getNombre());
-			pstm.setLong(3, item.getIdDireccion());
+			pstm.setLong(3, item.getDirection().getId());
 			pstm.setLong(4, item.getIdManager());
 
 			int i = pstm.executeUpdate();
@@ -181,7 +181,7 @@ public class DepartamentoDAO implements IDAO<Long, Departamento> {
 			con = driverManager.getConexion();
 			pstm = con.prepareStatement(sql);
 			pstm.setString(1,item.getNombre());
-			pstm.setLong(2, item.getIdDireccion());
+			pstm.setLong(2, item.getDirection().getId());
 			pstm.setLong(3, item.getIdManager());
 			pstm.setLong(4, item.getId());
 

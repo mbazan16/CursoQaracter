@@ -19,16 +19,16 @@ import com.ejemplo.JPATest.exceptions.DAOException;
 class DepartamentoDAOTest {
 
 	DepartamentoDAO depDAO;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(DepartamentoDAOTest.class);
-	
+
 	@BeforeEach
 	public void configurarDepDao() {
 		depDAO = new DepartamentoDAO();
 	}
 
 	@Test
-	//@Disabled
+	@Disabled
 	@DisplayName("Comprobar la nulidad")
 	void test() {
 		DepartamentoDAO depDAO = new DepartamentoDAO();
@@ -36,21 +36,30 @@ class DepartamentoDAOTest {
 	}
 
 	@Test
-	//@Disabled
+	@Disabled
 	@DisplayName("Encontrar el departamento 80")
 	void testFindOne() throws DAOException {
-		//DepartamentoDAO depDAO = new DepartamentoDAO();
-		
+		// DepartamentoDAO depDAO = new DepartamentoDAO();
+
 		log.info("--------------Departamento: TestFindOne--------------");
 		assertEquals(80, depDAO.findOne(80).getId());
 		assertEquals("Oxford", depDAO.findOne(80).getDireccion().getCiudad());
 	}
 
 	@Test
-	//@Disabled
+	@Disabled
+	@DisplayName("Mostrar todos los departamentos de Oxford")
+	void findAllByCity() throws DAOException {
+		// DepartamentoDAO depDAO = new DepartamentoDAO();
+		List<Departamento> dep = depDAO.findAllByCity("Oxford");
+		assertNotNull(dep);
+	}
+
+	@Test
+	@Disabled
 	@DisplayName("Encontrar el departamento 1000 y comprobar si lo ha creado")
 	void testCreate() throws DAOException {
-		//DepartamentoDAO depDAO = new DepartamentoDAO();
+		// DepartamentoDAO depDAO = new DepartamentoDAO();
 		Departamento dep = new Departamento(1000, "Dep x", 1700, 100);
 		depDAO.create(dep);
 		assertNotNull(depDAO.findOne(1000));
@@ -58,33 +67,34 @@ class DepartamentoDAOTest {
 	}
 
 	@Test
-	//@Disabled
-	@DisplayName("Departamento borrado")
-	void testDelete() throws DAOException {
-		//DepartamentoDAO depDAO = new DepartamentoDAO();
-		Departamento dep = new Departamento(1000, "Dep x", 1700, 100);
-		depDAO.create(dep);
-		depDAO.delete(1000);
-		assertNull(depDAO.findOne(1000));
-	}
-
-	@Test
-	//@Disabled
+	@Disabled
 	@DisplayName("Actualizar departamento")
 	void testUpdate() throws DAOException {
-		//DepartamentoDAO depDAO = new DepartamentoDAO();
+		// DepartamentoDAO depDAO = new DepartamentoDAO();
 		Departamento dep = new Departamento(1000, "Dep x", 1700, 100);
-		depDAO.create(dep);
+		// depDAO.create(dep);
 		assertEquals("Dep x", depDAO.findOne(1000).getNombre());
+		assertEquals("Dep x", dep.getNombre());
 		dep.setNombre("Dep y");
 		depDAO.update(dep);
 		assertEquals("Dep y", depDAO.findOne(1000).getNombre());
 	}
 
 	@Test
+	@Disabled
+	@DisplayName("Departamento borrado")
+	void testDelete() throws DAOException {
+		// DepartamentoDAO depDAO = new DepartamentoDAO();
+		Departamento dep = new Departamento(1000, "Dep y", 1700, 100);
+//		depDAO.create(dep);
+		depDAO.delete(1000);
+		assertNull(depDAO.findOne(1000));
+	}
+
+	@Test
 	@DisplayName("Mostrar todos los departamentos")
 	void findAll() throws DAOException {
-		//DepartamentoDAO depDAO = new DepartamentoDAO();
+		// DepartamentoDAO depDAO = new DepartamentoDAO();
 		List<Departamento> dep = depDAO.findAll();
 		assertNotNull(dep);
 	}

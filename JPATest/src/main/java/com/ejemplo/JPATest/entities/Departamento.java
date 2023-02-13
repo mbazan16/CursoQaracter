@@ -41,7 +41,6 @@ public class Departamento implements Serializable {
 		this.managerId = managerId;
 	}
 
-	
 	public int getId() {
 		return this.Id;
 	}
@@ -72,6 +71,12 @@ public class Departamento implements Serializable {
 
 	public void setManagerId(int managerId) {
 		this.managerId = managerId;
+	}
+
+	@Override
+	public String toString() {
+		return "Departamento [Id=" + Id + ", Nombre=" + Nombre + ", direccion=" + direccion + ", managerId=" + managerId
+				+ "]";
 	}
 
 }

@@ -44,5 +44,13 @@ public class GesConejo implements IConejo {
 	public void saltar() {
 		System.out.println("Conejo -> saltar()");
 	}
+	
+	public void merge() {
+		System.out.println("Conflicto");
+	}
+	
+	private void hola() {
+		
+	}
 
 }
